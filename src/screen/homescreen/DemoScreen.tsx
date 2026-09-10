@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import type { RootScreenProps } from '../../navigation/AppNavigator';
 
-const DemoScreen = ({ navigation }: RootScreenProps<'Users'>) => {
+const DemoScreen = ({ navigation }: RootScreenProps<'DemoScreen'>) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Users query demo</Text>
