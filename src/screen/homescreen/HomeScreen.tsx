@@ -22,9 +22,7 @@ export default function HomeScreen({ navigation, }: RootScreenProps<'HomeScreen'
             <Text style={styles.eyebrow}>
                 QUERY CACHE
             </Text>
-            <Text style={styles.eyebrow}>
-                QUERY CACHE
-            </Text>
+            
             <Text style={styles.title}>
                 A calmer way to fetch.
             </Text>
