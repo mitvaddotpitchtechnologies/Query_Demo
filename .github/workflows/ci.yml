@@ -46,7 +46,7 @@ jobs:
   # ANDROID AAB BUILD
   # =========================
   android:
-    name: Android Release AAB
+    name: Android Debug APK
     runs-on: ubuntu-latest
 
     needs:
@@ -90,7 +90,7 @@ jobs:
         uses: actions/upload-artifact@v4
         # GitHub Actions runner પર build થયેલ APK file ને upload કરે છે.
         with:
-          name: QueryDemo-release-aab
+          name:  QueryDemo-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
 
 
