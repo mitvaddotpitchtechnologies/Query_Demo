@@ -30,21 +30,19 @@ describe('HomeScreen', () => {
     });
 
     // 1. HomeScreen render test
-    it('renders HomeScreen correctly', () => {
-        const { getByText } = render(
-            <HomeScreen
-                navigation={{
-                    navigate: mockNavigate,
+    it('renders HomeScreen correctly', () => { // HomeScreen render થાય છે કે નહીં
+        const { getByText } = render(    // test environment માં render કરે છે.
+            <HomeScreen  
+                navigation={{  
+                    navigate: mockNavigate, 
                 } as any}
-                route={{} as any}
+                route={{} as any} 
             />,
         );
 
-        expect(getByText('QUERY CACHE')).toBeTruthy();
+        expect(getByText('QUERY CACHE')).toBeTruthy(); // HomeScreen માં QUERY CACHE text હોવું જોઈએ.
 
-        expect(
-            getByText('A calmer way to fetch.'),
-        ).toBeTruthy();
+        expect(getByText('A calmer way to fetch.')).toBeTruthy();
 
         expect(
             getByText(
@@ -58,8 +56,8 @@ describe('HomeScreen', () => {
     });
 
     // 2. Email Redux state test
-    it('displays email from Redux state', () => {
-        const { getByText } = render(
+    it('displays email from Redux state', () => {  // Redux state માંથી email display થાય છે કે નહીં  
+        const { getByText } = render(  
             <HomeScreen
                 navigation={{
                     navigate: mockNavigate,
@@ -68,13 +66,11 @@ describe('HomeScreen', () => {
             />,
         );
 
-        expect(
-            getByText('test@gmail.com'),
-        ).toBeTruthy();
+        expect( getByText('test@gmail.com'),).toBeTruthy();
     });
 
     // 3. Demo Screen navigation test
-    it('navigates to DemoScreen when Demo Screen button is pressed', () => {
+    it('navigates to DemoScreen when Demo Screen button is pressed', () => { // Demo Screen button press થાય ત્યારે navigation થાય છે કે નહીં
         const { getByText } = render(
             <HomeScreen
                 navigation={{
@@ -88,9 +84,9 @@ describe('HomeScreen', () => {
             getByText('Demo Screen'),
         );
 
-        expect(mockNavigate).toHaveBeenCalledTimes(1);
+        expect(mockNavigate).toHaveBeenCalledTimes(1); // navigation function call થાય છે કે નહીં
 
-        expect(mockNavigate).toHaveBeenCalledWith(
+        expect(mockNavigate).toHaveBeenCalledWith(   // correct screen name સાથે થાય છે કે નહીં
             'DemoScreen',
         );
     });
@@ -118,7 +114,7 @@ describe('HomeScreen', () => {
     });
 
     // 5. Sign out test
-    it('dispatches signOut when Sign out button is pressed', () => {
+    it('dispatches signOut when Sign out button is pressed', () => { // Sign out button press થાય ત્યારે signOut dispatch થાય છે કે નહીં
         const { getByText } = render(
             <HomeScreen
                 navigation={{
@@ -128,19 +124,19 @@ describe('HomeScreen', () => {
             />,
         );
 
-        fireEvent.press(
-            getByText('Sign out'),
+        fireEvent.press( // Sign out button press થાય છે કે નહીં
+            getByText('Sign out'),     
         );
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1);
+        expect(mockDispatch).toHaveBeenCalledTimes(1); // dispatch function call થાય છે કે નહીં
 
-        expect(mockDispatch).toHaveBeenCalledWith({
+        expect(mockDispatch).toHaveBeenCalledWith({   // 
             type: 'auth/signOut',
         });
     });
 
     // 6. Demo Screen should not navigate before button press
-    it('does not navigate initially', () => {
+    it('does not navigate initially', () => {  //
         render(
             <HomeScreen
                 navigation={{
@@ -152,7 +148,7 @@ describe('HomeScreen', () => {
 
         expect(
             mockNavigate,
-        ).not.toHaveBeenCalled();
+        ).not.toHaveBeenCalled();  
     });
 
     // 7. Sign out should not dispatch initially

@@ -3,9 +3,9 @@ import { Button } from 'react-native';
 import { render, fireEvent } from '@testing-library/react-native';
 import LoginScreen from '../src/screen/authscreen/LoginScreen';
 
-const mockDispatch = jest.fn();
+const mockDispatch = jest.fn(); //  
 
-jest.mock('../src/redux/hooks.ts', () => ({
+jest.mock('../src/redux/hooks.ts', () => ({ // 
   useAppDispatch: () => mockDispatch,
 }));
 
@@ -31,8 +31,8 @@ describe('LoginScreen', () => {
       getByText('Explore cached users with TanStack Query.')
     ).toBeTruthy();
 
-    expect(getByPlaceholderText('Email')).toBeTruthy();
-    expect(getByPlaceholderText('Password')).toBeTruthy();
+    expect(getByPlaceholderText('Email')).toBeTruthy(); // input હોવું જોઈએ."
+    expect(getByPlaceholderText('Password')).toBeTruthy(); 
 
     expect(getByText('Sign in')).toBeTruthy();
   });
@@ -93,9 +93,8 @@ describe('LoginScreen', () => {
     const { getByPlaceholderText, getByText } =
       render(<LoginScreen />);
 
-    const emailInput = getByPlaceholderText('Email');
-    const passwordInput =
-      getByPlaceholderText('Password');
+    const emailInput = getByPlaceholderText('Email'); 
+    const passwordInput =getByPlaceholderText('Password'); // store કરે છે.
 
     fireEvent.changeText(
       emailInput,
@@ -132,7 +131,7 @@ describe('LoginScreen', () => {
       '123456'
     );
 
-    fireEvent.press(getByText('Sign in'));
+    fireEvent.press(getByText('Sign in')); 
 
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'auth/signIn',
