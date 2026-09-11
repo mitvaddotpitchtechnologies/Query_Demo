@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -18,13 +19,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
-        uses: actions/checkout@v4 
-        # GitHub repository નો code GitHub Actions runner પર લાવે છે.
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        # GitHub Actions runner પર Node.js environment set up કરે છે.
         with:
           node-version: 22
           cache: npm
@@ -43,7 +43,7 @@ jobs:
 
 
   # =========================
-  # ANDROID AAB BUILD
+  # ANDROID DEBUG APK
   # =========================
   android:
     name: Android Debug APK
@@ -53,9 +53,9 @@ jobs:
       - test
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v4
-        
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -68,65 +68,53 @@ jobs:
 
       - name: Setup Java
         uses: actions/setup-java@v4
-        # GitHub Actions runner પર Java environment set up કરે છે.
         with:
           distribution: temurin
           java-version: 17
 
       - name: Setup Android
         uses: android-actions/setup-android@v3
-        # GitHub Actions runner પર Android environment set up કરે છે.
 
       - name: Make Gradle wrapper executable
         working-directory: android
         run: chmod +x gradlew
-        # GitHub Actions runner પર gradlew file ને executable બનાવે છે.
 
-      - name:  Build Android Debug APK
+      # =========================
+      # CLEAN
+      # =========================
+      - name: Clean Android build
+        working-directory: android
+        run: ./gradlew clean
+
+      # =========================
+      # BUILD APK
+      # =========================
+      - name: Build Debug APK
         working-directory: android
         run: ./gradlew assembleDebug
 
-      - name: Upload Android APK
+      # =========================
+      # VERIFY EXACT PATH
+      # =========================
+      - name: Check APK path
+        run: |
+          echo "Checking APK..."
+          ls -lh android/app/build/outputs/apk/debug/
+
+          if [ -f "android/app/build/outputs/apk/debug/app-debug.apk" ]; then
+            echo "✅ APK FOUND"
+            echo "Path: android/app/build/outputs/apk/debug/app-debug.apk"
+          else
+            echo "❌ APK NOT FOUND"
+            exit 1
+          fi
+
+      # =========================
+      # UPLOAD APK
+      # =========================
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
-        # GitHub Actions runner પર build થયેલ APK file ને upload કરે છે.
         with:
-          name:  QueryDemo-debug-apk
+          name: QueryDemo-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
-
-
-# =========================
-# iOS CI/CD - HIDDEN FOR NOW
-# =========================
-#
-#  ios:
-#    name: iOS Build
-#    runs-on: macos-latest
-#    needs:
-#      - test
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - uses: actions/setup-node@v4
-#        with:
-#          node-version: 22
-#          cache: npm
-#
-#      - run: npm ci
-#
-#      - name: Install CocoaPods
-#        working-directory: ios
-#        run: pod install
-#
-#      - name: Build iOS
-#        working-directory: ios
-#        run: |
-#          xcodebuild \
-#            -workspace QueryDemo.xcworkspace \
-#            -scheme QueryDemo \
-#            -configuration Debug \
-#            -sdk iphonesimulator \
-#            -destination 'generic/platform=iOS Simulator' \
-#            CODE_SIGNING_ALLOWED=NO \
-#            CODE_SIGNING_REQUIRED=NO \
-#            build
+          if-no-files-found: error
