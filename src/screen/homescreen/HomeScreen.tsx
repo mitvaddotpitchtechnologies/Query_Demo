@@ -14,7 +14,7 @@ import { signOut, } from '../../redux/reducer/authSlice';
 export default function HomeScreen({ navigation, }: RootScreenProps<'HomeScreen'>) {
 
     const dispatch = useAppDispatch();
-    const { email} = useAppSelector(state => state.auth);
+    const { email } = useAppSelector(state => state.auth);
 
     return (
         <View style={styles.container}>
@@ -22,7 +22,9 @@ export default function HomeScreen({ navigation, }: RootScreenProps<'HomeScreen'
             <Text style={styles.eyebrow}>
                 QUERY CACHE
             </Text>
-
+            <Text style={styles.eyebrow}>
+                QUERY CACHE
+            </Text>
             <Text style={styles.title}>
                 A calmer way to fetch.
             </Text>
