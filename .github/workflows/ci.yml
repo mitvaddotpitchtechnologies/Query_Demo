@@ -19,10 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 
+        # GitHub repository નો code GitHub Actions runner પર લાવે છે.
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
+        # GitHub Actions runner પર Node.js environment set up કરે છે.
         with:
           node-version: 22
           cache: npm
@@ -53,6 +55,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -65,16 +68,19 @@ jobs:
 
       - name: Setup Java
         uses: actions/setup-java@v4
+        # GitHub Actions runner પર Java environment set up કરે છે.
         with:
           distribution: temurin
           java-version: 17
 
       - name: Setup Android
         uses: android-actions/setup-android@v3
+        # GitHub Actions runner પર Android environment set up કરે છે.
 
       - name: Make Gradle wrapper executable
         working-directory: android
         run: chmod +x gradlew
+        # GitHub Actions runner પર gradlew file ને executable બનાવે છે.
 
       - name:  Build Android Debug APK
         working-directory: android
@@ -82,6 +88,7 @@ jobs:
 
       - name: Upload Android APK
         uses: actions/upload-artifact@v4
+        # GitHub Actions runner પર build થયેલ APK file ને upload કરે છે.
         with:
           name: QueryDemo-release-aab
           path: android/app/build/outputs/apk/debug/app-debug.apk

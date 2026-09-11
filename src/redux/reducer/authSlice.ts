@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type AuthState = {
+type AuthState = { 
   email: string | null;
   isAuthenticated: boolean;
 };
